@@ -1,20 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {
-  MatTableModule,
   MatFormFieldModule,
   MatInputModule,
   MatCheckboxModule,
-  MatChipsModule,
-  MatExpansionModule,
   MatButtonModule,
   MatIconModule,
-  MatSortModule,
-  MatTabsModule,
   MatOptionModule,
   MatSelectModule,
-  MatTreeModule
+  MatTreeModule,
 } from '@angular/material';
+
 import {
   FormsModule,
   ReactiveFormsModule
@@ -24,35 +20,14 @@ import { AppComponent } from './app.component';
 
 @NgModule({
   imports: [
+    BrowserModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule,
     MatCheckboxModule,
-    MatChipsModule,
-    MatExpansionModule,
     MatButtonModule,
     MatIconModule,
-    MatSortModule,
     FormsModule,
     ReactiveFormsModule,
-    MatTabsModule,
-    MatOptionModule,
-    MatSelectModule,
-    MatTreeModule
-  ],
-  exports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatTableModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatExpansionModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSortModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatTabsModule,
     MatOptionModule,
     MatSelectModule,
     MatTreeModule

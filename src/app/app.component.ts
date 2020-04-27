@@ -1,3 +1,5 @@
+// based on https://stackblitz.com/edit/angular-hpsj5x?embed=1&file=app/tree-checklist-example.html
+
 import { Component } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
@@ -56,8 +58,28 @@ export class AppComponent  {
     );
     this.treeControl = new FlatTreeControl<TodoItemFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+    this.dataSource.data = this.buildFileTree(TREE_DATA, 0);
     // keep previous selection
     this.previousChecklistSelection = this.checklistSelection;
+  }
+
+  buildFileTree(obj: object, level: number): TodoItemNode[] {
+    if (!obj) { return []; }
+    return Object.keys(obj).sort().reduce<TodoItemNode[]>((accumulator, key) => {
+      const value = obj[key];
+      const node = new TodoItemNode();
+      node.item = key;
+
+      if (value != null) {
+        if (typeof value === 'object') {
+          node.children = this.buildFileTree(value, level + 1);
+        } else {
+          node.item = value;
+        }
+      }
+
+      return accumulator.concat(node);
+    }, []);
   }
 
   getLevel = (node: TodoItemFlatNode) => node.level;
@@ -111,10 +133,6 @@ export class AppComponent  {
 
   /** Toggle the to-do item selection. Select/deselect all the descendants node */
   todoItemSelectionToggle(node: TodoItemFlatNode): void {
-    // Rules State
-    // this.modifiedRules = true;
-    // this.savedRules = false;
-    // selection
     this.checklistSelection.toggle(node);
     const descendants = this.treeControl.getDescendants(node);
     this.checklistSelection.isSelected(node)
@@ -130,10 +148,6 @@ export class AppComponent  {
 
   /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
   todoLeafItemSelectionToggle(node: TodoItemFlatNode): void {
-    // Rules State
-    // this.modifiedRules = true;
-    // this.savedRules = false;
-    // selection
     this.checklistSelection.toggle(node);
     this.checkAllParentsSelection(node);
   }
@@ -164,10 +178,7 @@ export class AppComponent  {
   /* Get the parent node of a node */
   getParentNode(node: TodoItemFlatNode): TodoItemFlatNode | null {
     const currentLevel = this.getLevel(node);
-
-    if (currentLevel < 1) {
-      return null;
-    }
+    if (currentLevel < 1) { return null; }
 
     const startIndex = this.treeControl.dataNodes.indexOf(node) - 1;
 

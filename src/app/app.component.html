@@ -1,11 +1,11 @@
-<p>
-  Angular tree view
-</p>
+<h5>Angular 8 Material Tree View (multi levels & parent fixed)</h5>
 
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
         <button mat-icon-button disabled></button>
-        <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)" (change)="todoLeafItemSelectionToggle(node);">{{ node.item }}</mat-checkbox>
+        <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)" (change)="todoLeafItemSelectionToggle(node);">
+          {{ node.item }}
+        </mat-checkbox>
     </mat-tree-node>
 
     <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
@@ -17,6 +17,8 @@
                 {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
             </mat-icon>
         </button>
-        <mat-checkbox [checked]="descendantsAllSelected(node)" [indeterminate]="descendantsPartiallySelected(node)" (change)="todoItemSelectionToggle(node)">{{ node.item }}</mat-checkbox>
+        <mat-checkbox [checked]="descendantsAllSelected(node)" [indeterminate]="descendantsPartiallySelected(node)" (change)="todoItemSelectionToggle(node)">
+          {{ node.item }}
+        </mat-checkbox>
     </mat-tree-node>
 </mat-tree>
